@@ -34,8 +34,11 @@ class LogisticRegression:
 
         cost = 0
 
-        theta = np.asarray(theta)  # convert from np.matrix to np.array 
         X = np.asarray(X)  # same
+        X = np.reshape(X, [n,d])  # reshape theta into a row vector, in case it comes is as a column vector
+        y = np.asarray(y)
+        y = np.reshape(y, [n,1])
+        theta = np.asarray(theta)  # convert from np.matrix to np.array 
         theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
 
         for i in range(1,n):
@@ -65,8 +68,11 @@ class LogisticRegression:
         n,d = X.shape
         gradient = np.zeros((d))
 
+        X = np.reshape(X, [n,d])  # reshape theta into a row vector, in case it comes is as a column vector
+        X = np.reshape(X, [n,d])  # reshape theta into a row vector, in case it comes is as a column vector
+        y = np.asarray(y)
+        y = np.reshape(y, [n,1])
         theta = np.asarray(theta)  # convert from np.matrix to np.array 
-        X = np.asarray(X)  # same
         theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
 
         for j in range(d):
