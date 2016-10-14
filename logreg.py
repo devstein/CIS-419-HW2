@@ -69,7 +69,7 @@ class LogisticRegression:
                 htheta = self.sigmoid(np.multiply(theta.T,xi))
 
                 if (j != 0):
-                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j]
+                    gradient[j] += (theta.item(0) - yi.item(0)) * X[i,j].item(0) + regLambda * theta[j].item(0)
                 else:
                     print htheta, yi, (htheta - yi)
                     gradient[j] += htheta.item(0) - yi.item(0)
