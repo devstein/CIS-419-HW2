@@ -107,7 +107,7 @@ SVM_KERNELPARAMETEREFFECTS:
 #######################################################################################
 
 # What was the optimal value you found for C?
-SVM_OPTIMAL_C: 123.45
+SVM_OPTIMAL_C: 1000
 
 # What was the optimal value you found for sigma?
 SVM_OPTIMAL_SIGMA: 123.45

@@ -29,7 +29,7 @@ C = 1000
 # train the SVM
 print "Training the SVM"
 equivalentGamma = 1.0 / (2 * _gaussSigma ** 2)
-myModel = svm.SVC(C = C, kernel=myGaussianKernel, gamma=1)
+myModel = svm.SVC(C = C, kernel=myGaussianKernel)
 myModel.fit(X, Y)
 
 print ""
@@ -55,3 +55,4 @@ plt.scatter(X[:, 0], X[:, 1], c=Y, cmap=plt.cm.Paired)
 plt.title('SVM decision surface with C = '+str(C))
 plt.axis('tight')
 plt.show()
+
