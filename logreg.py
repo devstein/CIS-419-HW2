@@ -30,6 +30,10 @@ class LogisticRegression:
         '''
         n,d = X.shape
 
+        theta = np.asarray(theta)  # convert from np.matrix to np.array 
+        X = np.asarray(X)  # same
+        theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
+
         reg = np.linalg.norm(theta) ** 2
 
         cost = 0
@@ -61,6 +65,10 @@ class LogisticRegression:
         '''
         n,d = X.shape
         gradient = np.zeros((d))
+
+        theta = np.asarray(theta)  # convert from np.matrix to np.array 
+        X = np.asarray(X)  # same
+        theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
 
         for j in range(d):
             for i in range(1,n):
@@ -114,6 +122,7 @@ class LogisticRegression:
 
             numIters += 1
 
+        print numIters
 
 
     def predict(self, X):

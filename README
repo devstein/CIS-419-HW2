@@ -87,7 +87,7 @@ PROB_VC_SPHERE2: 123.45
 # Copy and paste your brief paragraph describing the effect of the regularization 
 # parameter from your PDF.
 LOGREGIMPLEMENTATION_REGULARIZATION_ANALYSIS:
- As I increased the value of lambda, I observed that...
+ As I increased the value of lambda, I observed that the predicted line was shifted in the south west direction. Capturing more of the blue dots in the red region as the value increased. At a value of 1 about 3/4 of the figure was shaded red. The increase in lambda causes the gradient to increase more rapidly causing it to converge faster.
 
 
 
@@ -98,7 +98,7 @@ LOGREGIMPLEMENTATION_REGULARIZATION_ANALYSIS:
 # Copy and paste your brief paragraph describing the effect of varying the kernel  
 # parameters and C from your PDF.
 SVM_KERNELPARAMETEREFFECTS:
-  As C increased, I observed that...
+  As C increased, I observed that the algorithm overclassifies capturing as many points as possible even though they are extreme outliers. As sigma increases, the boundaries of the classification become more rigid with straight lined edges thus reducing the variances of the guassian. As d increases in the polynomial kernel, the polynomial curve of the boundaries increae accordingly. 
 
 
 

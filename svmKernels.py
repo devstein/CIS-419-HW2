@@ -8,8 +8,8 @@ Author: Eric Eaton, 2014
 import numpy as np
 
 
-_polyDegree = 2
-_gaussSigma = 1
+_polyDegree = 3
+_gaussSigma = 1000
 
 def myPolynomialKernel(X1, X2):
     '''

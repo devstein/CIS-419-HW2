@@ -25,6 +25,7 @@ if __name__ == "__main__":
     
     # train logistic regression
     logregModel = LogisticRegression(regLambda = 0.00000001)
+
     logregModel.fit(X,y)
     
     # Plot the decision boundary
