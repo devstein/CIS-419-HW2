@@ -43,12 +43,12 @@ class LogisticRegression:
         y = np.asarray(y)
         y = np.reshape(y, [n,1])
         theta = np.asarray(theta)  # convert from np.matrix to np.array 
-        theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
+        theta = np.reshape(theta, [d,1])  # reshape theta into a row vector, in case it comes is as a column vector
 
         for i in range(1,n):
             xi = X[i]
             yi = y[i]
-            htheta = self.sigmoid(theta.dot(xi))
+            htheta = self.sigmoid(np.dot(theta.T,xi))
 
             cost += yi * np.log(htheta) + (1 - yi) * np.log(1 - htheta)
             cost += (regLambda / 2) * reg
@@ -77,16 +77,16 @@ class LogisticRegression:
         y = np.asarray(y)
         y = np.reshape(y, [n,1])
         theta = np.asarray(theta)  # convert from np.matrix to np.array 
-        theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
+        theta = np.reshape(theta, [d,1])  # reshape theta into a col vector, in case it comes is as a column vector
 
         for j in range(d):
             for i in range(1,n):
                 xi = X[i, :]
                 yi = y[i]
-                htheta = self.sigmoid(theta.dot(xi))
+                htheta = self.sigmoid(np.dot(theta.T,xi))
 
                 if (j != 0):
-                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[0,j]
+                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j,0]
                 else:
                     gradient[j] += htheta - yi
 
