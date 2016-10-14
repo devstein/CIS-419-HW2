@@ -30,7 +30,11 @@ class LogisticRegression:
         '''
         n,d = X.shape
 
-        reg = np.linalg.norm(theta) ** 2
+        reg = 0
+
+        for i in range(len(theta)):
+            reg += np.linalg.norm(theta[i]) ** 2
+
 
         cost = 0
 
@@ -44,7 +48,7 @@ class LogisticRegression:
         for i in range(1,n):
             xi = X[i]
             yi = y[i]
-            htheta = self.sigmoid(np.multiply(theta,xi))
+            htheta = self.sigmoid(np.dot(theta,xi))
 
             cost += yi * np.log(htheta) + (1 - yi) * np.log(1 - htheta)
             cost += (regLambda / 2) * reg
@@ -79,10 +83,8 @@ class LogisticRegression:
             for i in range(1,n):
                 xi = X[i, :]
                 yi = y[i]
-                htheta = self.sigmoid(np.multiply(theta,xi))
+                htheta = self.sigmoid(np.dot(theta,xi))
 
-                print htheta
-                print yi
                 if (j != 0):
                     gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[0,j]
                 else:
@@ -99,7 +101,11 @@ class LogisticRegression:
 
 
     def hasConverged(self, theta):
-        return np.linalg.norm(theta) <= self.epsilon
+        sum = 0;
+        for i in range(len(theta)):
+            sum += np.linalg.norm(theta[i])
+
+        return sum <= self.epsilon
 
     def fit(self, X, y):
         '''
@@ -122,7 +128,7 @@ class LogisticRegression:
 
         while(not converged and (numIters < self.maxNumIters)):
 
-            thetaOld = np.copy(thetaNew)
+            thetaOld = thetaNew
 
             thetaNew = thetaOld - self.alpha * self.computeGradient(thetaOld, Xp, y, self.regLambda)
 
