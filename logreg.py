@@ -79,27 +79,26 @@ class LogisticRegression:
         theta = np.asarray(theta)  # convert from np.matrix to np.array 
         theta = np.reshape(theta, [d,1])  # reshape theta into a col vector, in case it comes is as a column vector
 
-        for j in range(1,d):
-            for i in range(1,n):
-                xi = X[i, :]
-                yi = y[i, 0]
-                # d,1 x n, = 
-                htheta = self.sigmoid(np.dot(theta.T,xi))
+        # for j in range(1,d):
+        #     for i in range(1,n):
+        #         xi = X[i, :]
+        #         yi = y[i, 0]
+        #         # d,1 x n, = 
+        #         htheta = self.sigmoid(np.dot(theta.T,xi))
 
-                if (j != 0):
-                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j,0]
+        #         if (j != 0):
+        #             gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j,0]
 
-                else:
-                    gradient[j] += htheta - yi
+        #         else:
+        #             gradient[j] += htheta - yi
 
 
-        # htheta = self.sigmoid(np.dot(X, theta))
+        htheta = self.sigmoid(np.dot(X, theta))
 
-        # gradient = 1/n  * (np.dot(X.T, htheta - y))
+        gradient = 1/n  * (np.dot(X.T, htheta - y) + regLambda * theta)
 
-        #want d x 1 
-        print "Grad: ", gradient.shape
-        gradient = np.reshape(gradient, [d,1]) 
+        gradient[0] = sum(htheta - y) / n
+
         return gradient
 
     def sigmoid(self, Z):
@@ -131,15 +130,11 @@ class LogisticRegression:
 
             thetaOld = np.copy(thetaNew)
 
-            print "Old: ", thetaOld.shape
-
             thetaNew = thetaOld - (self.alpha * self.computeGradient(thetaOld, Xp, y, self.regLambda))
 
-            print "New: ", thetaNew
             if(self.hasConverged(thetaNew - thetaOld)):
                 break
 
-        print numIters
         self.theta = thetaNew
 
     def predict(self, X):
