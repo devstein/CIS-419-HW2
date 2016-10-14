@@ -48,15 +48,12 @@ class LogisticRegression:
         for i in range(1,n):
             xi = X[i]
             yi = y[i]
-            try:
-                htheta = self.sigmoid(np.dot(theta.T,xi))
-            except ValueError:
-                htheta = self.sigmoid(np.dot(theta,xi))
+            htheta = self.sigmoid(np.dot(theta.T,xi))
 
             cost += yi * np.log(htheta) + (1 - yi) * np.log(1 - htheta)
-            cost += (regLambda / 2) * reg
+        cost += (regLambda / 2) * reg
         cost= -cost
-       
+
         #make sure cost isnt' a 1x1 matrix
         return cost.item(0)
 
@@ -82,19 +79,22 @@ class LogisticRegression:
         theta = np.asarray(theta)  # convert from np.matrix to np.array 
         theta = np.reshape(theta, [d,1])  # reshape theta into a col vector, in case it comes is as a column vector
 
-        for j in range(1,d):
-            for i in range(1,n):
-                xi = X[i, :]
-                yi = y[i, 0]
-                try:
-                    htheta = self.sigmoid(np.dot(theta.T,xi))
-                except ValueError:
-                    htheta = self.sigmoid(np.dot(theta,xi))
+        # for j in range(1,d):
+        #     for i in range(1,n):
+        #         xi = X[i, :]
+        #         yi = y[i, 0]
+        #         htheta = self.sigmoid(np.dot(theta,xi))
 
-                if (j != 0):
-                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j,0]
+        #         if (j != 0):
+        #             gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[0,j]
 
-        gradient[0] = self.sigmoid(np.dot(theta.T,X[0, :])) - y[0,0]
+        #         else:
+        #             gradient[j] += htheta - yi
+
+
+        htheta = self.sigmoid(np.dot(X, theta))
+
+        gradient = 1/n  * (np.dot(X.T, htheta - y))
 
         return gradient
 
@@ -121,18 +121,18 @@ class LogisticRegression:
         Xp = np.c_[np.ones((n,1)),X]
 
         thetaNew = np.random.randn(d + 1)
-
-        #stop iterations when ||theta new - theta old||2 <= epsioln
-        #or we pass maxNumIters
+        thetaNew = np.reshape(thetaNew, [d+1, 1]) 
 
         for numIters in range(self.maxNumIters):
-            thetaOld = thetaNew
 
-            thetaNew = thetaOld - self.alpha * self.computeGradient(thetaOld, Xp, y, self.regLambda)
+            thetaOld = np.copy(thetaNew)
+
+            thetaNew = thetaOld - (self.alpha * self.computeGradient(thetaOld, Xp, y, self.regLambda))
 
             if(self.hasConverged(thetaNew - thetaOld)):
                 break
 
+        print numIters
         self.theta = thetaNew
 
     def predict(self, X):

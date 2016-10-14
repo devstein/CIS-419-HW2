@@ -27,7 +27,7 @@ if __name__ == "__main__":
     logregModel = LogisticRegression(regLambda = 0.00000001)
 
     logregModel.fit(X,y)
-    
+
     # Plot the decision boundary
     h = .02  # step size in the mesh
     x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
