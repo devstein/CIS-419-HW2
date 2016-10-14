@@ -69,7 +69,6 @@ class LogisticRegression:
         X = np.asarray(X)  # same
         theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
 
-
         for j in range(d):
             for i in range(1,n):
                 xi = X[i, :]
@@ -105,7 +104,7 @@ class LogisticRegression:
 
         Xp = np.c_[np.ones((n,1)),X]
 
-        self.theta = np.random.randn(d + 1)
+        thetaNew = np.random.randn(d + 1)
 
         #stop iterations when ||theta new - theta old||2 <= epsioln
         #or we pass maxNumIters
@@ -115,16 +114,16 @@ class LogisticRegression:
 
         while(not converged and (numIters < self.maxNumIters)):
 
-            thetaOld = np.copy(self.theta)
+            thetaOld = np.copy(thetaNew)
 
-            self.theta = thetaOld - self.alpha * self.computeGradient(thetaOld, Xp, y, self.regLambda)
+            thetaNew = thetaOld - self.alpha * self.computeGradient(thetaOld, Xp, y, self.regLambda)
 
-            converged = self.hasConverged(self.theta - thetaOld)
+            converged = self.hasConverged(thetaNew - thetaOld)
 
             numIters += 1
 
         print numIters
-
+        self.theta = thetaNew
 
     def predict(self, X):
         '''
