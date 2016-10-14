@@ -48,11 +48,11 @@ class LogisticRegression:
         for i in range(1,n):
             xi = X[i]
             yi = y[i]
-            htheta = self.sigmoid(np.dot(theta,xi))
+            htheta = self.sigmoid(theta.dot(xi))
 
             cost += yi * np.log(htheta) + (1 - yi) * np.log(1 - htheta)
             cost += (regLambda / 2) * reg
-        cost = -cost
+        cost= -cost
        
         #make sure cost isnt' a 1x1 matrix
         return cost.item(0)
@@ -83,7 +83,7 @@ class LogisticRegression:
             for i in range(1,n):
                 xi = X[i, :]
                 yi = y[i]
-                htheta = self.sigmoid(np.dot(theta,xi))
+                htheta = self.sigmoid(theta.dot(xi))
 
                 if (j != 0):
                     gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[0,j]
