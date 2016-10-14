@@ -41,15 +41,16 @@ class LogisticRegression:
         for i in range(1,n):
             xi = X[i]
             yi = y[i]
-            htheta = self.sigmoid(np.dot(theta.T,xi))
+            htheta = self.sigmoid(np.dot(theta,xi))
 
             cost += yi * np.log(htheta) + (1 - yi) * np.log(1 - htheta)
             cost += (regLambda / 2) * reg
         cost = -cost
        
         #make sure cost isnt' a 1x1 matrix
-        return cost.item(0)
-
+        if (cost.item(0)):
+         cost = cost.item(0)
+        return cost
 
         
     
@@ -74,10 +75,10 @@ class LogisticRegression:
             for i in range(1,n):
                 xi = X[i, :]
                 yi = y[i]
-                htheta = self.sigmoid(np.dot(theta.T,xi))
+                htheta = self.sigmoid(np.dot(theta,xi))
   
                 if (j != 0):
-                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j]
+                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[0,j]
                 else:
                     gradient[j] += htheta - yi
 
@@ -106,10 +107,6 @@ class LogisticRegression:
         Xp = np.c_[np.ones((n,1)),X]
 
         self.theta = np.random.randn(d + 1)
-
-        self.theta = np.asarray(self.theta)  # convert from np.matrix to np.array 
-        Xp = np.asarray(Xp)  # same
-        self.theta = np.reshape(self.theta, [1,d + 1])  # reshape theta into a row vector, in case it comes is as a column vector
 
         #stop iterations when ||theta new - theta old||2 <= epsioln
         #or we pass maxNumIters
