@@ -82,10 +82,10 @@ class LogisticRegression:
         theta = np.asarray(theta)  # convert from np.matrix to np.array 
         theta = np.reshape(theta, [d,1])  # reshape theta into a col vector, in case it comes is as a column vector
 
-        for j in range(d):
+        for j in range(1,d):
             for i in range(1,n):
                 xi = X[i, :]
-                yi = y[i]
+                yi = y[i, 0]
                 try:
                     htheta = self.sigmoid(np.dot(theta.T,xi))
                 except ValueError:
@@ -93,8 +93,8 @@ class LogisticRegression:
 
                 if (j != 0):
                     gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j,0]
-                else:
-                    gradient[j] += htheta - yi
+
+        gradient[0] = self.sigmoid(np.dot(theta.T,X[0, :])) - y[0,0]
 
         return gradient
 
@@ -107,11 +107,7 @@ class LogisticRegression:
 
 
     def hasConverged(self, theta):
-        sum = 0;
-        for i in range(len(theta)):
-            sum += np.linalg.norm(theta[i])
-
-        return sum <= self.epsilon
+        return np.linalg.norm(theta) <= self.epsilon
 
     def fit(self, X, y):
         '''
@@ -128,21 +124,15 @@ class LogisticRegression:
 
         #stop iterations when ||theta new - theta old||2 <= epsioln
         #or we pass maxNumIters
-        numIters = 0
-        converged = False
 
-
-        while(not converged and (numIters < self.maxNumIters)):
-
+        for numIters in range(self.maxNumIters):
             thetaOld = thetaNew
 
             thetaNew = thetaOld - self.alpha * self.computeGradient(thetaOld, Xp, y, self.regLambda)
 
-            converged = self.hasConverged(thetaNew - thetaOld)
+            if(self.hasConverged(thetaNew - thetaOld)):
+                break
 
-            numIters += 1
-
-        print numIters
         self.theta = thetaNew
 
     def predict(self, X):
