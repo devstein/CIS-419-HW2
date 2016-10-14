@@ -73,11 +73,11 @@ class LogisticRegression:
         for j in range(d):
             for i in range(1,n):
                 xi = X[i, :]
-                yi = y[i].item(0)
+                yi = y[i]
                 htheta = self.sigmoid(np.dot(theta.T,xi))
   
                 if (j != 0):
-                    gradient[j] += (htheta - yi) * X[i,j].item(0) + regLambda * theta[j].item(0)
+                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j]
                 else:
                     gradient[j] += htheta - yi
 
