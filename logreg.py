@@ -101,10 +101,15 @@ class LogisticRegression:
             X is a n-by-d numpy matrix
             y is an n-dimensional numpy vector
         '''
-        n,d = X.shape
+        n,d = X.shape 
+
         Xp = np.c_[np.ones((n,1)),X]
 
         self.theta = np.random.randn(d + 1)
+
+        self.theta = np.asarray(self.theta)  # convert from np.matrix to np.array 
+        Xp = np.asarray(Xp)  # same
+        self.theta = np.reshape(self.theta, [1,d + 1])  # reshape theta into a row vector, in case it comes is as a column vector
 
         #stop iterations when ||theta new - theta old||2 <= epsioln
         #or we pass maxNumIters
