@@ -71,7 +71,8 @@ class LogisticRegression:
                 if (j != 0):
                     gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j]
                 else:
-                    gradient[j] += htheta - yi
+                    print htheta, yi, (htheta - yi)
+                    gradient[j] += htheta.item(0) - yi.item(0)
 
         return gradient
 
