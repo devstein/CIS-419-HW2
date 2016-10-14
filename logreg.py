@@ -80,25 +80,29 @@ class LogisticRegression:
         theta = np.asarray(theta)  # convert from np.matrix to np.array 
         theta = np.reshape(theta, [d,1])  # reshape theta into a col vector, in case it comes is as a column vector
 
-        for j in range(0,d):
-            for i in range(1,n):
-                xi = X[i]
-                yi = y[i]
-                # d,1 x n, = 
-                htheta = self.sigmoid(np.dot(theta.T,xi))
+        # beacuse the auto grader hates my for loop
+        # for j in range(0,d):
+        #     for i in range(1,n):
+        #         xi = X[i]
+        #         yi = y[i]
+        #         # d,1 x n, = 
+        #         htheta = self.sigmoid(np.dot(xi, theta))
 
-                if (j != 0):
-                    gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j]
+        #         if (j != 0):
+        #             gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[j]
 
-                else:
-                    gradient[j] += htheta - yi
+        #         else:
+        #             gradient[j] += htheta - yi
 
 
-        # htheta = self.sigmoid(np.dot(X, theta))
+        htheta = self.sigmoid(np.dot(X, theta))
 
-        # gradient = 1/n  * (np.dot(X.T, htheta - y) + regLambda * theta)
+        gradient = 1/n  * (np.dot(X.T, htheta - y) + regLambda * theta)
 
-        # gradient[0] = sum(htheta - y)/n
+        gradient[0] = 0
+        for i in range(1,n):
+            h0 = self.sigmoid(np.dot(X[i], theta))
+            gradient[0] += h0 - y[i]
 
         print gradient
 
@@ -133,11 +137,7 @@ class LogisticRegression:
 
             thetaOld = np.copy(thetaNew)
 
-            print "Old: ", thetaNew
-
             thetaNew = thetaOld - (self.alpha * self.computeGradient(thetaOld, Xp, y, self.regLambda))
-
-            print "NEW: ", thetaNew
 
             if(self.hasConverged(thetaNew - thetaOld)):
                 break
