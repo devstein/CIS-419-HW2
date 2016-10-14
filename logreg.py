@@ -30,13 +30,13 @@ class LogisticRegression:
         '''
         n,d = X.shape
 
-        theta = np.asarray(theta)  # convert from np.matrix to np.array 
-        X = np.asarray(X)  # same
-        theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
-
         reg = np.linalg.norm(theta) ** 2
 
         cost = 0
+
+        theta = np.asarray(theta)  # convert from np.matrix to np.array 
+        X = np.asarray(X)  # same
+        theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
 
         for i in range(1,n):
             xi = X[i]
@@ -48,9 +48,7 @@ class LogisticRegression:
         cost = -cost
        
         #make sure cost isnt' a 1x1 matrix
-        if (cost.item(0)):
-         cost = cost.item(0)
-        return cost
+        return cost.item(0)
 
         
     
@@ -58,7 +56,7 @@ class LogisticRegression:
         '''
         Computes the gradient of the objective function
         Arguments:
-            X is a n-by-d numpy matrix
+            X is a n-by-d    numpy matrix
             y is an n-dimensional numpy vector
             regLambda is the scalar regularization constant
         Returns:
@@ -71,12 +69,13 @@ class LogisticRegression:
         X = np.asarray(X)  # same
         theta = np.reshape(theta, [1,d])  # reshape theta into a row vector, in case it comes is as a column vector
 
+
         for j in range(d):
             for i in range(1,n):
                 xi = X[i, :]
                 yi = y[i]
                 htheta = self.sigmoid(np.dot(theta,xi))
-  
+
                 if (j != 0):
                     gradient[j] += (htheta - yi) * X[i,j] + regLambda * theta[0,j]
                 else:
@@ -142,3 +141,5 @@ class LogisticRegression:
 
         # predict
         return np.array(np.around(self.sigmoid(Xp.dot(self.theta))))
+
+

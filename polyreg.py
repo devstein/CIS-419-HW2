@@ -26,7 +26,8 @@ class PolynomialRegression:
 
         for i in range(d):
             means[i] = np.mean(features[:,i])
-        return means
+        
+        self.means = means
 
     def getStds(self, features):
         n,d = features.shape
@@ -34,17 +35,18 @@ class PolynomialRegression:
 
         for i in range(d):
            stds[i] = np.std(features[:,i])
-        return stds
+        
+        self.stds = stds
 
-    def standardize(self, features, means, stds):
+    def standardize(self, features):
         standardized = np.zeros(features.shape)
 
         n,d = features.shape
 
         for j in range(d):
             for i in range(n):
-                if (stds[j] != 0.0): 
-                    standardized[i,j] = (features[i,j] - means[j]) / stds[j]
+                if (self.stds[j] != 0.0): 
+                    standardized[i,j] = (features[i,j] - self.means[j]) / self.stds[j]
                 else:
                     standardized[i,j] =  features[i,j]
 
@@ -93,9 +95,10 @@ class PolynomialRegression:
 
         n,d = features.shape
 
-        means = self.getMeans(features)
-        stds = self.getStds(features)
-        standardized = self.standardize(features, means, stds)
+        self.getMeans(features)
+        self.getStds(features)
+
+        standardized = self.standardize(features)
 
         Xp = np.c_[np.ones([n,1]), standardized]
 
@@ -117,39 +120,12 @@ class PolynomialRegression:
         
         features = self.polyfeatures(X, self.degree)
 
-        means = self.getMeans(features)
-        stds = self.getStds(features)
-        standardized = self.standardize(features, means, stds)
+        standardized = self.standardize(features)
         # add 1s column
         Xp = np.c_[np.ones([n, 1]), standardized];
 
         # predict
         return Xp.dot(self.theta)
-
-
-    def predictTest(self, Xtest, Xtrain):
-        '''
-        Use the trained model to predict values for each instance in X
-        Arguments:
-            X is a n-by-1 numpy array
-        Returns:
-            an n-by-1 numpy array of the predictions
-        '''
-        n = len(Xtest)
-        
-        featuresTest = self.polyfeatures(Xtest, self.degree)
-        featuresTrain = self.polyfeatures(Xtrain, self.degree)
-
-        means = self.getMeans(featuresTrain)
-        stds = self.getStds(featuresTrain)
-
-        standardized = self.standardize(featuresTest, means, stds)
-
-        # add 1s column
-        Xp = np.c_[np.ones([n, 1]), standardized];
-
-        # predict
-        return Xp.dot(self.theta);
 
 #-----------------------------------------------------------------
 #  End of Class PolynomialRegression
@@ -202,7 +178,7 @@ def learningCurve(Xtrain, Ytrain, Xtest, Ytest, regLambda, degree):
         model.fit(Xtrain[0:(i+1)], Ytrain[0:(i+1)])
 
         errorTrain[i] = regressionError(model.predict(Xtrain[0:(i+1)]), Ytrain[0:(i+1)])
-        errorTest[i] = regressionError(model.predictTest(Xtest[0:(i+1)], Xtrain[0:(i+1)]), Ytest[0:(i+1)])
+        errorTest[i] = regressionError(model.predict(Xtest[0:(i+1)]), Ytest[0:(i+1)])
 
     
     return (errorTrain, errorTest)
