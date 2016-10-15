@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 from sklearn import svm, datasets
 from svmKernels import myGaussianKernel
 from svmKernels import _gaussSigma
+from sklearn.metrics import accuracy_score
 
 
 # load the data
@@ -24,18 +25,16 @@ allData = np.loadtxt(filename, delimiter=',')
 X = allData[:,:-1]
 Y = allData[:,-1]
 
-C = 1000
+C = 75
 
 # train the SVM
 print "Training the SVM"
-equivalentGamma = 1.0 / (2 * _gaussSigma ** 2)
-myModel = svm.SVC(C = C, kernel=myGaussianKernel)
-myModel.fit(X, Y)
+equivalentGamma = 1.0 / (2 * 20	 ** 2)
+model = svm.SVC(C = C, kernel='rbf', gamma=equivalentGamma)
+model.fit(X, Y)
 
-print ""
-print "Testing the SVM"
-
-h = .02  # step size in the mesh
+print accuracy_score(Y, model.predict(X))
+h = .02  # step size in the mes
 
 # Plot the decision boundary. For that, we will assign a color to each
 # point in the mesh [x_min, m_max]x[y_min, y_max].
@@ -43,7 +42,7 @@ x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
 y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
 xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
-myPredictions = myModel.predict(np.c_[xx.ravel(), yy.ravel()])
+myPredictions = model.predict(np.c_[xx.ravel(), yy.ravel()])
 myPredictions = myPredictions.reshape(xx.shape)	
 
 

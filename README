@@ -47,6 +47,9 @@ SOURCESCONSULTED: |
     While completing the assignment, I consulted the following sources: 
     Chapter 2 of Pattern Recognition and Machine Learning by C. Bishop
     Chapter 5 of Machine Learning, A Probabilistic Perspective by K. Murphy
+    Coursera Lectures
+    Reed Rosenbluth and Hannah Cutler
+    Office Hours
 
 
  
@@ -57,10 +60,10 @@ SOURCESCONSULTED: |
 #######################################################################################
 
 # Problem 2b: what is the value of the margin  (only your final numeric answer)
-PROB_SVMBYHAND_MARGIN: 123.45
+PROB_SVMBYHAND_MARGIN: 2.828427
 
 # Problem 2d: what is the value of w_0  (only your final numeric answer)
-PROB_SVMBYHAND_W0: 123.45
+PROB_SVMBYHAND_W0: 1.00
 
 
 
@@ -107,13 +110,13 @@ SVM_KERNELPARAMETEREFFECTS:
 #######################################################################################
 
 # What was the optimal value you found for C?
-SVM_OPTIMAL_C: 1000
+SVM_OPTIMAL_C: 75
 
 # What was the optimal value you found for sigma?
-SVM_OPTIMAL_SIGMA: 123.45
+SVM_OPTIMAL_SIGMA: 20
 
 # What is the estimated accuracy for your choice of optimal parameters?
-SVM_OPTIMAL_ACCURACY: 123.45
+SVM_OPTIMAL_ACCURACY: 0.984615384615
 
 
  
@@ -127,7 +130,7 @@ SVM_OPTIMAL_ACCURACY: 123.45
 #######################################################################################
 
 # Approximately how many hours did it take you to complete this assignment?
-FEEDBACK_NUM_HOURS: 0
+FEEDBACK_NUM_HOURS: 16
 
 # Please list any typos / errors you noticed in the assignment description or skeleton code
 FEEDBACK_ERRORS: |
@@ -135,5 +138,5 @@ FEEDBACK_ERRORS: |
  
 # Please describe any problems you encountered while completing this assignment
 FEEDBACK_PROBLEMS: |
-    None
+    Instructions for Problem 2 were not clear. Local test files not testing the same format as the eniac tests.
     
